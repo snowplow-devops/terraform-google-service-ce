@@ -1,0 +1,59 @@
+#!/bin/bash
+set -e -x
+
+# -----------------------------------------------------------------------------
+#  BASE INSTALL
+# -----------------------------------------------------------------------------
+
+function install_docker_ce() {
+  sudo apt install docker.io -y
+  sudo systemctl enable --now docker
+}
+
+function get_instance_id() {
+  curl --silent --location "http://metadata.google.internal/computeMetadata/v1/instance/id" -H "Metadata-Flavor:Google"
+}
+
+function get_application_memory_mb() {
+  local __memory_for_app_pct
+  local __memory_for_os_mb
+  __memory_for_app_pct=$${1:-80}
+  __memory_for_os_mb=$${2:-384}
+
+  local __memory_mb
+  local __memory_application_mb_max
+  local __memory_application_mb_calc
+  local __memory_os_mb_calc
+
+  # The available memory in megabytes on the server
+  __memory_mb=$(awk '/^Mem/ {print $2}' <(free -m))
+
+  # The maximal allocation of memory given the OS memory constraint
+  __memory_application_mb_max=$(expr $${__memory_mb} - $${__memory_for_os_mb})
+  # The maximal allocation of memory based on the application pct
+  __memory_application_mb_calc=$(expr $${__memory_for_app_pct} \* $${__memory_mb} / 100)
+  # The expected memory leftover for the OS
+  __memory_os_mb_calc=$(expr $${__memory_mb} - $${__memory_application_mb_calc})
+
+  # If the application pct would leave LESS than the required OS memory then 
+  # we take the remaining memory after OS memory is apportioned.
+  #
+  # Otherwise we take the percentage of the box as indicated.
+  if [ $${__memory_os_mb_calc} -lt $${__memory_for_os_mb} ]; then
+    echo "$${__memory_application_mb_max}"
+  else
+    echo "$${__memory_application_mb_calc}"
+  fi
+}
+
+sudo apt update -y
+sudo apt install wget unzip apt-transport-https ca-certificates curl software-properties-common jq -y
+
+install_docker_ce
+
+# -----------------------------------------------------------------------------
+#  USER SUPPLIED SCRIPT
+# -----------------------------------------------------------------------------
+
+# shellcheck disable=SC2154
+${user_supplied_script}
