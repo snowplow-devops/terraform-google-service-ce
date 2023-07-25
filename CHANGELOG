@@ -1,3 +1,3 @@
-Version 0.1.0 (2021-07-02)
+Version 0.1.0 (2023-07-26)
 --------------------------
-Initial release
+Add base compute module to use for all Snowplow services (closes #1)
