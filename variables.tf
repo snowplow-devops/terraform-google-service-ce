@@ -75,6 +75,30 @@ variable "health_check_path" {
   default     = ""
 }
 
+variable "timeout_sec" {
+  description = "How long (in seconds) to wait before claiming failure"
+  type        = number
+  default     = 5
+}
+
+variable "check_interval_sec" {
+  description = "How often (in seconds) to send a health check"
+  type        = number
+  default     = 5
+}
+
+variable "healthy_threshold" {
+  description = "A so-far unhealthy instance will be marked healthy after this many consecutive successes"
+  type        = number
+  default     = 2
+}
+
+variable "unhealthy_threshold" {
+  description = "A so-far healthy instance will be marked unhealthy after this many consecutive failures"
+  type        = number
+  default     = 10
+}
+
 variable "user_supplied_script" {
   description = "The user-data script extension to execute"
   type        = string
