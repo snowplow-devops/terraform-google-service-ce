@@ -96,3 +96,9 @@ variable "labels" {
   default     = {}
   type        = map(string)
 }
+
+variable "cloud_ops_agent_enabled" {
+  description = "Whether to install a GCP Cloud Ops Agent; disabled by default"
+  default     = false
+  type        = bool
+}

@@ -1,6 +1,7 @@
 locals {
   startup_script = templatefile("${path.module}/templates/startup-script.sh.tmpl", {
-    user_supplied_script = var.user_supplied_script
+    cloud_ops_agent_enabled = var.cloud_ops_agent_enabled
+    user_supplied_script    = var.user_supplied_script
   })
 }
 
