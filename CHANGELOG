@@ -1,3 +1,7 @@
+Version 0.2.0 (2024-08-20)
+--------------------------
+Add a new input variable `cloud_ops_agent_enabled` to download and configure GCP Ops Agent. This is disabled by default to not affect existing installations.
+ 
 Version 0.1.0 (2023-07-26)
 --------------------------
 Add base compute module to use for all Snowplow services (closes #1)

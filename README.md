@@ -58,6 +58,7 @@ No modules.
 | <a name="input_subnetwork"></a> [subnetwork](#input\_subnetwork) | The name of the sub-network to deploy within; if populated will override the 'network' setting | `string` | `""` | no |
 | <a name="input_target_size"></a> [target\_size](#input\_target\_size) | The number of servers to deploy | `number` | `1` | no |
 | <a name="input_ubuntu_20_04_source_image"></a> [ubuntu\_20\_04\_source\_image](#input\_ubuntu\_20\_04\_source\_image) | The source image to use which must be based of of Ubuntu 20.04; by default the latest community version is used | `string` | `""` | no |
+| <a name="input_cloud_ops_agent_enabled"></a> [cloud\_ops\_agent\_enabled](#input\_cloud\_ops\_agent\_enabled) | Whether to install a GCP Cloud Ops Agent; disabled by default | `bool` | `false` | no |
 
 ## Outputs
 
