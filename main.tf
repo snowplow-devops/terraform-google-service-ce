@@ -4,8 +4,8 @@ locals {
   })
 }
 
-data "google_compute_image" "ubuntu_20_04" {
-  family  = "ubuntu-2004-lts"
+data "google_compute_image" "ubuntu_24_04" {
+  family  = "ubuntu-2404-lts-amd64"
   project = "ubuntu-os-cloud"
 }
 
@@ -22,7 +22,7 @@ resource "google_compute_instance_template" "tpl" {
   }
 
   disk {
-    source_image = var.ubuntu_20_04_source_image == "" ? data.google_compute_image.ubuntu_20_04.self_link : var.ubuntu_20_04_source_image
+    source_image = var.ubuntu_24_04_source_image == "" ? data.google_compute_image.ubuntu_24_04.self_link : var.ubuntu_24_04_source_image
     auto_delete  = true
     boot         = true
     disk_type    = "pd-standard"
